@@ -1,0 +1,65 @@
+
+define floorplan model
+(
+  color "gray30"
+  boundary 1
+  gui_nose 0
+  gui_grid 0
+  gui_outline 0
+  gripper_return 0
+  fiducial_return 0
+  ranger_return 1  
+)
+
+define scout_laser ranger
+(
+  sensor(
+    range [ 0.05 30.0 ]
+    fov 360.0
+    samples 720
+  )
+  color "blue"
+  size [ 0.05 0.05 0.05 ]
+)
+
+define scout_mini position
+(
+  size [0.62 0.58 0.25]
+  origin [0 0 0 0]
+  gui_nose 1
+  drive "omni"
+  
+  localization "odom"
+  localization_origin [ 0 0 0 0 ]
+  odom_error [ 0.0 0.0 0.0 0.0 ]
+  
+ 
+  scout_laser(
+    pose [ 0.0 0.0 0.2 0.0 ]
+    name "laser"
+  )
+)
+interval_sim 100
+interval_real 100
+speedup 1.0
+paused 0
+window
+(
+  size [ 800 600 ]
+  center [ 0.0 0.0 ]
+  scale 50
+)
+
+floorplan
+(
+  name "map"
+  bitmap "../map/my_final_map.pgm"
+  size [ 30.55 17.45 2.0 ]
+  pose [ 8.455 -3.975 0.0 0.0 ]
+)
+
+scout_mini
+(
+  name "scout"
+  pose [ 0.0 0.0 0.0 0.0 ]
+)
